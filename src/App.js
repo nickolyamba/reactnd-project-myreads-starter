@@ -2,6 +2,8 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
+/* eslint-disable */
+
 class BooksApp extends React.Component {
   state = {
     /**
@@ -11,7 +13,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: true
-  }
+  };
 
   render() {
     return (

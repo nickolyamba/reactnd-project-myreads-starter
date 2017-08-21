@@ -1,3 +1,7 @@
 node_modules
 yarn.lock
 .DS_Store
+
+### WebStorm files ###
+.idea
+*.pdf
