@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import Header from './Header';
 
 const BookLibrary = (props) => (
     <div className="list-books">
-        <div className="list-books-title">
-            <h1>MyReads</h1>
-        </div>
+        <Header headerText='MyReads'/>
         <div className="list-books-content">
             <div>
                 <div className="bookshelf">
