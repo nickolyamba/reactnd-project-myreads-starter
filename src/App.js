@@ -7,6 +7,9 @@ import Search from "./Search";
 
 class BooksApp extends React.Component {
   state = {
+      currentRead: [],
+      wantToRead: [],
+      read: []
   };
 
   render() {
@@ -17,7 +20,6 @@ class BooksApp extends React.Component {
               <BookLibrary/>
             )}
           />
-
           {/*Search Component*/}
           <Route path="/search" render={({history}) => (
               <Search/>
