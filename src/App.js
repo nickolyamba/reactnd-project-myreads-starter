@@ -4,13 +4,7 @@ import {Route} from 'react-router-dom'
 import BookLibrary from './BookLibrary';
 import Search from "./Search";
 import * as BooksAPI from './BooksAPI'
-
-const shelfTypes = [
-        {value: 'currentlyReading', name: 'Currently Reading'},
-        {value: 'wantToRead', name: 'Want to Read'},
-        {value: 'read', name: 'Read'},
-        {value: 'none', name: 'None'}
-    ];
+import {shelfTypes} from './config';
 
 class BooksApp extends React.Component {
   state = {
