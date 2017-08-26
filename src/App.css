@@ -26,6 +26,10 @@ body, .app {
   flex: 1;
 }
 
+.list-books-content > ul{
+    list-style: none;
+}
+
 .bookshelf {
   padding: 0 10px 20px;
 }
