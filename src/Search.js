@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import * as BooksAPI from './BooksAPI'
+
+
 
 const Search = (props) => (
     <div className="search-books">
@@ -16,11 +19,12 @@ const Search = (props) => (
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author"/>
-
             </div>
         </div>
         <div className="search-books-results">
-            <ol className="books-grid"></ol>
+            <ol className="books-grid">
+
+            </ol>
         </div>
     </div>
 );
