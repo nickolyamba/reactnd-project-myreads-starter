@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const Header = (props) => (
 
-    <div className="list-books-title">
+    <nav className="list-books-title">
         <h1>{props.headerText}</h1>
-    </div>
+    </nav>
 
 );
 
