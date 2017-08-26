@@ -12,7 +12,10 @@ class BooksShelf extends React.Component{
                         {
                             this.props.books.map((book, key) => (
                                 <li key={book.id}>
-                                    <Book title={book.title} authors={book.authors} cover={book.imageLinks.thumbnail}/>
+                                    <Book title={book.title} authors={book.authors}
+                                          cover={book.imageLinks.thumbnail}
+                                          shelfId={this.props.shelfId}
+                                    />
                                 </li>
                             ))}
                     </ol>
@@ -24,6 +27,7 @@ class BooksShelf extends React.Component{
 
 BooksShelf.propTypes = {
     title: PropTypes.string.isRequired,
+    shelfId: PropTypes.string.isRequired,
     books: PropTypes.array
 };
 

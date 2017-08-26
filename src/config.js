@@ -1,8 +1,8 @@
 const shelfTypes = [
-    {value: 'currentlyReading', name: 'Currently Reading'},
-    {value: 'wantToRead', name: 'Want to Read'},
-    {value: 'read', name: 'Read'},
-    {value: 'none', name: 'None'}
+    {id: 'currentlyReading', name: 'Currently Reading'},
+    {id: 'wantToRead', name: 'Want to Read'},
+    {id: 'read', name: 'Read'},
+    {id: 'none', name: 'None'}
 ];
 
 const shelfChangerHeader = 'Move To...';

@@ -11,7 +11,7 @@ class Book extends React.Component{
                     <div className="book-cover" 
                          style={{width: 128, height: 193, backgroundImage: `url(${this.props.cover})`}}>
                     </div>
-                    <ShelfChanger/>
+                    <ShelfChanger selectedOption={this.props.shelfId}/>
                 </div>
                 <div className="book-title">{this.props.title}</div>
                 <div className="book-authors">{this.props.authors[0]}</div>
@@ -23,7 +23,8 @@ class Book extends React.Component{
 Book.propTypes = {
     title: PropTypes.string.isRequired,
     authors: PropTypes.array.isRequired,
-    cover: PropTypes.string
+    cover: PropTypes.string,
+    shelfId: PropTypes.string.isRequired,
 };
 
 export default Book;

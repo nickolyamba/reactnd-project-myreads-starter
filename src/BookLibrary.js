@@ -13,16 +13,15 @@ const BookLibrary = (props) => {
         <div className="list-books">
             <Header headerText='MyReads'/>
             <div className="list-books-content">
+                {/*Populate each Bookshelf with corresponding books props*/}
                 <ul>
                     {props.shelfTypes.map((shelf, key) => (
-                        shelf.value !== 'none' &&
-                        <li key={shelf.value}>
-                            <Bookshelf books={getBooksByShelfName(props.books, shelf.value)}
-                                       title={shelf.name}/>
+                        shelf.id !== 'none' &&
+                        <li key={shelf.id}>
+                            <Bookshelf books={getBooksByShelfName(props.books, shelf.id)}
+                                       title={shelf.name} shelfId={shelf.id}/>
                         </li>
-
                     ))}
-
                 </ul>
 
             </div>
