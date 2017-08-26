@@ -5,12 +5,12 @@ import BookLibrary from './BookLibrary';
 import Search from "./Search";
 import * as BooksAPI from './BooksAPI'
 
-const shelfTypes = {
-        currentlyReading: {value: 'currentlyReading', name: 'Currently Reading'},
-        wantToRead: {value: 'wantToRead', name: 'Want to Read'},
-        read: {value: 'read', name: 'Read'},
-        none: {value: 'none', name: 'None'}
-    };
+const shelfTypes = [
+        {value: 'currentlyReading', name: 'Currently Reading'},
+        {value: 'wantToRead', name: 'Want to Read'},
+        {value: 'read', name: 'Read'},
+        {value: 'none', name: 'None'}
+    ];
 
 class BooksApp extends React.Component {
   state = {
