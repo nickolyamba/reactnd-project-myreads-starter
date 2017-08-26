@@ -13,8 +13,19 @@ const BookLibrary = (props) => {
         <div className="list-books">
             <Header headerText='MyReads'/>
             <div className="list-books-content">
-                <Bookshelf books={getBooksByShelfName(props.books, props.shelfTypes.currentlyReading.value)}
-                           title={props.shelfTypes.currentlyReading.name}/>
+                <ul>
+                    {props.shelfTypes.map((shelf, key) => (
+                        shelf.value !== 'none' &&
+                        <li key={shelf.value}>
+                            <Bookshelf books={getBooksByShelfName(props.books, shelf.value)}
+                                       title={shelf.name}/>
+                            {console.log(shelf.name)}
+                        </li>
+
+                    ))}
+
+                </ul>
+
             </div>
             <div className="open-search">
                 <Link to="/search">Add a book</Link>
@@ -24,7 +35,7 @@ const BookLibrary = (props) => {
 };
 
 BookLibrary.propTypes = {
-    shelfTypes: PropTypes.object.isRequired,
+    shelfTypes: PropTypes.array.isRequired,
     books: PropTypes.array
 };
 
