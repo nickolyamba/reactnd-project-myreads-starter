@@ -19,7 +19,6 @@ const BookLibrary = (props) => {
                         <li key={shelf.value}>
                             <Bookshelf books={getBooksByShelfName(props.books, shelf.value)}
                                        title={shelf.name}/>
-                            {console.log(shelf.name)}
                         </li>
 
                     ))}

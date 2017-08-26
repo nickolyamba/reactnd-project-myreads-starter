@@ -5,4 +5,6 @@ const shelfTypes = [
     {value: 'none', name: 'None'}
 ];
 
-export {shelfTypes}
+const shelfChangerHeader = 'Move To...';
+
+export {shelfTypes, shelfChangerHeader}

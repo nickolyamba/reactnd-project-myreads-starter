@@ -4,7 +4,6 @@ import Book from './Book';
 
 class BooksShelf extends React.Component{
     render(){
-        console.log(this.props.books);
         return(
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{this.props.title}</h2>
@@ -16,7 +15,6 @@ class BooksShelf extends React.Component{
                                     <Book title={book.title} authors={book.authors} cover={book.imageLinks.thumbnail}/>
                                 </li>
                             ))}
-                        {console.log('yo',this.props.books)}
                     </ol>
                 </div>
             </div>
