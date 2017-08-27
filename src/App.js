@@ -14,23 +14,52 @@ class BooksApp extends React.Component {
       BooksAPI.getAll().then(books => {
           console.log(books);
           shelfTypes.forEach(shelf => {
-              let booksOnShelf = this.getBooksByShelfName(books, shelf);
+              const booksOnShelf = this.getBooksByShelf(books, shelf);
               this.setState({[shelf.id]: booksOnShelf});
           })
       })
     }
 
-    getBooksByShelfName = (books, shelf) => {
+    getBooksByShelf = (books, shelf) => {
         return books.filter(book => book.shelf === shelf.id);
     };
 
-    onShelfChanged = (shelfId, id) => {
+    // sync with a backend
+    updateBooksByShelf = (updatedBooks, newShelfId, oldShelfId, bookId) => {
+        // if succesfully updated shelf on a backend,
+        // remove the book from the shelf
+        let movedBook;
+        if(updatedBooks[oldShelfId] && !updatedBooks[oldShelfId].includes(bookId)){
+            console.log('inUpdate', bookId);
+            this.setState(prevState => (
+                {
+                    [oldShelfId]: prevState[oldShelfId].filter(book => {
+                        if(bookId === book.id)
+                            movedBook = book;
+                        return bookId !== book.id;
+                    })
+                }
+            ))
+        }
+
+        // if succesfully updated shelf on a backend,
+        // add the book to a new shelf
+        if(updatedBooks[newShelfId] && updatedBooks[newShelfId].includes(bookId)){
+            this.setState(prevState => {
+                movedBook.shelf = newShelfId;
+                prevState[newShelfId].push(movedBook);
+                return {[newShelfId]: prevState[newShelfId]}
+            })
+        }
+    };
+
+    onShelfChanged = (newShelfId, oldShelfId, bookId) => {
         // const updatedBook = this.state.books.filter(book => book.id === id)[0];
-        console.log(shelfId, id);
+        console.log(newShelfId, oldShelfId, bookId);
 
         // Update book's shelf by its id and new shelf id
-        BooksAPI.update({id: id}, shelfId).then(book => {
-            console.log('updated', book);
+        BooksAPI.update({id: bookId}, newShelfId).then(updatedBooks => {
+            this.updateBooksByShelf(updatedBooks, newShelfId, oldShelfId, bookId);
         });
     };
 
