@@ -9,8 +9,8 @@ import Bookshelf from './Bookshelf';
 // };
 
 class BookLibrary extends React.Component{
-    onShelfChanged = (value, id) => {
-        this.props.onShelfChanged(value, id);
+    onShelfChanged = (newShelfId, oldShelfId, bookId) => {
+        this.props.onShelfChanged(newShelfId, oldShelfId, bookId);
     };
 
     render(){

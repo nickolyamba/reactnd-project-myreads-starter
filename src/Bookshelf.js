@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import Book from './Book';
 
 class BooksShelf extends React.Component{
+
+    onShelfChanged = (newShelfId, bookId) => {
+        this.props.onShelfChanged(newShelfId, this.props.shelfId, bookId);
+    };
+
     render(){
         return(
             <div className="bookshelf">
@@ -10,14 +15,17 @@ class BooksShelf extends React.Component{
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {
-                            this.props.books.map((book, key) => (
+                            this.props.books &&
+                            this.props.books.map(book => (
                                 <li key={book.id}>
                                     <Book title={book.title} authors={book.authors}
                                           cover={book.imageLinks.thumbnail}
-                                          shelfId={this.props.shelfId}
+                                          shelfId={this.props.shelfId} bookId={book.id}
+                                          onShelfChanged={this.onShelfChanged}
                                     />
                                 </li>
-                            ))}
+                            ))
+                        }
                     </ol>
                 </div>
             </div>
@@ -28,7 +36,8 @@ class BooksShelf extends React.Component{
 BooksShelf.propTypes = {
     title: PropTypes.string.isRequired,
     shelfId: PropTypes.string.isRequired,
-    books: PropTypes.array
+    books: PropTypes.array,
+    onShelfChanged: PropTypes.func.isRequired
 };
 
 export default BooksShelf;
