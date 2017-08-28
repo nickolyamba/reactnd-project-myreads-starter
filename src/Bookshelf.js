@@ -4,8 +4,8 @@ import Book from './Book';
 
 class BooksShelf extends React.Component{
 
-    onShelfChanged = (newShelfId, bookId) => {
-        this.props.onShelfChanged(newShelfId, this.props.shelfId, bookId);
+    onShelfChanged = (newShelfId, shelfId, bookId) => {
+        this.props.onShelfChanged(newShelfId, shelfId, bookId);
     };
 
     render(){
