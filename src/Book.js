@@ -4,7 +4,7 @@ import ShelfChanger from './ShelfChanger';
 
 class Book extends React.Component{
     onShelfChanged = (newShelfId) => {
-        this.props.onShelfChanged(newShelfId, this.props.bookId);
+        this.props.onShelfChanged(newShelfId, this.props.shelfId, this.props.bookId);
     };
 
     render(){
