@@ -9,6 +9,11 @@ import {shelfTypes} from './config';
 class BooksApp extends React.Component {
     state = {};
 
+    /**
+     * Get all the books from backend.
+     * Place each book in a corresponding shelf
+     * in this.state
+     */
     componentDidMount(){
       BooksAPI.getAll().then(books => {
           shelfTypes.forEach(shelf => {
