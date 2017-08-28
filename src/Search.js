@@ -2,31 +2,94 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI'
+import Book from "./Book";
+import {shelfTypes} from './config';
 
+const MAX_RESULTS = 5;
 
+class Search extends React.Component {
+    constructor(props){
+        super(props);
 
-const Search = (props) => (
-    <div className="search-books">
-        <div className="search-books-bar">
-            <Link to="/" className="close-search" >Close</Link>
-            <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+        this.state = {
+            query: '',
+            books: []
+        }
+    }
 
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
+    onShelfChanged = (newShelfId, oldShelfId, bookId) => {
+        const movedBook = this.state.books.filter(book => book.id === bookId)[0];
+        this.props.onShelfChanged(newShelfId, oldShelfId, movedBook);
+    };
+
+    updateQuery(query){
+        this.setState({query}, () => this.getBooksByQuery());
+    }
+
+    getBooksByQuery(){
+        if(this.state.query === ''){
+            this.setState({books: []});
+            return;
+        }
+        BooksAPI.search(this.state.query, MAX_RESULTS).then(books => {
+            if(!!books['error']) books = [];
+            this.assignBooksToShelves(books);
+            this.setState({books});
+        });
+    }
+
+    assignBooksToShelves(booksByQuery){
+        for(let i = 0; i < booksByQuery.length; i++){
+            const bookByQuery = booksByQuery[i];
+
+            shelfTypes.forEach(shelf => {
+                const booksOnShelf = this.props.allBooks[shelf.id];
+                for(let j = 0; j < booksOnShelf.length; j++){
+                    const bookOnShelf = booksOnShelf[j];
+
+                    if(bookOnShelf.id === bookByQuery.id){
+                        bookByQuery['shelf'] = bookOnShelf.shelf;
+                    }
+                }
+            });
+        }
+    }
+
+    render(){
+        return(
+            <div className="search-books">
+                <div className="search-books-bar">
+                    <Link to="/" className="close-search" >Close</Link>
+                    <div className="search-books-input-wrapper">
+                        <input value={this.state.query} type="text"
+                               placeholder="Search by title or author"
+                               onChange={(event)=> this.updateQuery(event.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="search-books-results">
+                    <ol className="books-grid">
+                        {
+                            this.state.books.map(book => (
+                                <li key={book.id}>
+                                    <Book title={book.title} authors={!!book.authors ? book.authors : []}
+                                          cover={book.imageLinks.thumbnail}
+                                          shelfId={!!book.shelf ? book.shelf : 'none'} bookId={book.id}
+                                          onShelfChanged={this.onShelfChanged}
+                                    />
+                                </li>
+                            ))
+                        }
+                    </ol>
+                </div>
             </div>
-        </div>
-        <div className="search-books-results">
-            <ol className="books-grid">
+        )
+    }
+}
 
-            </ol>
-        </div>
-    </div>
-);
+
+Search.propTypes = {
+    allBooks: PropTypes.object,
+};
 
 export default Search;
