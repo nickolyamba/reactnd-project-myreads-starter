@@ -12,7 +12,7 @@ class ShelfChanger extends React.Component{
         return(
             //  the default value for the control should always be the current shelf the book is in.
             <div className="book-shelf-changer">
-                <select value={defaultOption} onChange={(event) => this.onShelfChanged(event.target.value)}>
+                <select defaultValue={defaultOption} onChange={(event) => this.onShelfChanged(event.target.value)}>
                     <option key={shelfChangerHeader} value="none" disabled>{shelfChangerHeader}</option>
                     {shelfTypes.map(shelf => (
                         <option key={shelf.id} value={shelf.id}>{shelf.name}</option>
