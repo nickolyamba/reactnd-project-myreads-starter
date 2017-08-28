@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI'
 import Book from "./Book";
-import {shelfTypes} from './config';
 
 const MAX_RESULTS = 5;
 
@@ -38,20 +37,16 @@ class Search extends React.Component {
         });
     }
 
+    /**
+     * Assign queried books to shelves
+     * @param booksByQuery
+     */
     assignBooksToShelves(booksByQuery){
+        const booksOnShelves = this.props.allBooks;
         for(let i = 0; i < booksByQuery.length; i++){
             const bookByQuery = booksByQuery[i];
+            bookByQuery.shelf = booksOnShelves[bookByQuery.id] ? booksOnShelves[bookByQuery.id] : 'none';
 
-            shelfTypes.forEach(shelf => {
-                const booksOnShelf = this.props.allBooks[shelf.id];
-                for(let j = 0; j < booksOnShelf.length; j++){
-                    const bookOnShelf = booksOnShelf[j];
-
-                    if(bookOnShelf.id === bookByQuery.id){
-                        bookByQuery['shelf'] = bookOnShelf.shelf;
-                    }
-                }
-            });
         }
     }
 
@@ -74,7 +69,7 @@ class Search extends React.Component {
                                 <li key={book.id}>
                                     <Book title={book.title} authors={!!book.authors ? book.authors : []}
                                           cover={book.imageLinks.thumbnail}
-                                          shelfId={!!book.shelf ? book.shelf : 'none'} bookId={book.id}
+                                          shelfId={book.shelf} bookId={book.id}
                                           onShelfChanged={this.onShelfChanged}
                                     />
                                 </li>
