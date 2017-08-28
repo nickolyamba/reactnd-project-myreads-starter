@@ -42,7 +42,7 @@ class Search extends React.Component {
      * @param booksByQuery
      */
     assignBooksToShelves(booksByQuery){
-        const booksOnShelves = this.props.allBooks;
+        const booksOnShelves = this.props.bookIdToShelfMap;
         for(let i = 0; i < booksByQuery.length; i++){
             const bookByQuery = booksByQuery[i];
             bookByQuery.shelf = booksOnShelves[bookByQuery.id] ? booksOnShelves[bookByQuery.id] : 'none';
@@ -84,7 +84,7 @@ class Search extends React.Component {
 
 
 Search.propTypes = {
-    allBooks: PropTypes.object,
+    bookIdToShelfMap: PropTypes.object,
 };
 
 export default Search;
