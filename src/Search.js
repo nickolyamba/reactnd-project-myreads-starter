@@ -54,6 +54,7 @@ class Search extends React.Component {
                 <div className="search-books-bar">
                     <Link to="/" className="close-search" >Close</Link>
                     <div className="search-books-input-wrapper">
+                        {/*Use debounce to control frequency of onChange events*/}
                         <Debounce time="100" handler="onChange">
                             <input  type="text"
                                    placeholder="Search by title or author"
