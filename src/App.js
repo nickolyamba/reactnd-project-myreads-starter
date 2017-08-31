@@ -121,8 +121,10 @@ class BooksApp extends React.Component {
               />
 
               {/*Search Component*/}
-              <Route path="/search" render={() => (
-                  <Search onShelfChanged={this.onShelfChangedInSearch} allBooks={this.getMapBookIdToShelf()}/>
+              <Route path="/search" render={({history}) => (
+                  <Search onShelfChanged={(newShelfId, oldShelfId, movedBook) =>
+                    {this.onShelfChangedInSearch(newShelfId, oldShelfId, movedBook); history.push('/')}}
+                          bookMap={this.getMapBookIdToShelf()}/>
                 )}
               />
           </div>
