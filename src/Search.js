@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import { Debounce } from 'react-throttle';
 import * as BooksAPI from './BooksAPI'
 import Book from "./Book";
 
@@ -22,16 +23,13 @@ class Search extends React.Component {
     };
 
     updateQuery(query){
-        this.setState({query}, () => this.getBooksByQuery());
+        //this.setState({query}, () => this.getBooksByQuery());
+        this.getBooksByQuery(query);
     }
 
-    getBooksByQuery(){
-        if(this.state.query === ''){
-            this.setState({books: []});
-            return;
-        }
-        BooksAPI.search(this.state.query, MAX_RESULTS).then(books => {
-            if(!!books['error']) books = [];
+    getBooksByQuery(query){
+        BooksAPI.search(query, MAX_RESULTS).then(books => {
+            if(!books || books['error']) books = [];
             this.assignBooksToShelves(books);
             this.setState({books});
         });
@@ -42,11 +40,11 @@ class Search extends React.Component {
      * @param booksByQuery
      */
     assignBooksToShelves(booksByQuery){
-        const booksOnShelves = this.props.bookIdToShelfMap;
+        const booksOnShelves = this.props.bookMap;
         for(let i = 0; i < booksByQuery.length; i++){
             const bookByQuery = booksByQuery[i];
-            bookByQuery.shelf = booksOnShelves[bookByQuery.id] ? booksOnShelves[bookByQuery.id] : 'none';
-
+            bookByQuery.shelf = booksOnShelves[bookByQuery.id] ?
+                booksOnShelves[bookByQuery.id] : 'none';
         }
     }
 
@@ -56,10 +54,12 @@ class Search extends React.Component {
                 <div className="search-books-bar">
                     <Link to="/" className="close-search" >Close</Link>
                     <div className="search-books-input-wrapper">
-                        <input value={this.state.query} type="text"
-                               placeholder="Search by title or author"
-                               onChange={(event)=> this.updateQuery(event.target.value)}
-                        />
+                        <Debounce time="100" handler="onChange">
+                            <input  type="text"
+                                   placeholder="Search by title or author"
+                                   onChange={event => this.updateQuery(event.target.value)}
+                            />
+                        </Debounce>
                     </div>
                 </div>
                 <div className="search-books-results">
@@ -84,7 +84,7 @@ class Search extends React.Component {
 
 
 Search.propTypes = {
-    bookIdToShelfMap: PropTypes.object,
+    bookMap: PropTypes.object
 };
 
 export default Search;
