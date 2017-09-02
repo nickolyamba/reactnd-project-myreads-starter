@@ -12,7 +12,6 @@ class Search extends React.Component {
         super(props);
 
         this.state = {
-            query: '',
             books: []
         }
     }
@@ -23,16 +22,19 @@ class Search extends React.Component {
     };
 
     updateQuery(query){
-        //this.setState({query}, () => this.getBooksByQuery());
         this.getBooksByQuery(query);
     }
 
     getBooksByQuery(query){
+        if(query === ''){
+            this.setState({books: []});
+            return;
+        }
         BooksAPI.search(query, MAX_RESULTS).then(books => {
             if(!books || books['error']) books = [];
             this.assignBooksToShelves(books);
             this.setState({books});
-        });
+        })
     }
 
     /**
