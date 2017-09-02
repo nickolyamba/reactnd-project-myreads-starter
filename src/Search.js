@@ -16,6 +16,10 @@ class Search extends React.Component {
         }
     }
 
+    componentDidMount(){
+        this.nameInput.focus();
+    }
+
     onShelfChanged = (newShelfId, oldShelfId, bookId) => {
         const movedBook = this.state.books.filter(book => book.id === bookId)[0];
         this.props.onShelfChanged(newShelfId, oldShelfId, movedBook);
@@ -58,8 +62,10 @@ class Search extends React.Component {
                     <div className="search-books-input-wrapper">
                         {/*Use debounce to control frequency of onChange events*/}
                         <Debounce time="100" handler="onChange">
-                            <input  type="text"
+                            <input type="text"
                                    placeholder="Search by title or author"
+                                   /*source: https://stackoverflow.com/questions/28889826*/
+                                   ref={input => this.nameInput = input}
                                    onChange={event => this.updateQuery(event.target.value)}
                             />
                         </Debounce>
