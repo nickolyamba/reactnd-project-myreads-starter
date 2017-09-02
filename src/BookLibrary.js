@@ -4,10 +4,6 @@ import {Link} from 'react-router-dom';
 import Header from './Header';
 import Bookshelf from './Bookshelf';
 
-// const getBooksByShelfName = (books, shelfName) => {
-//     return books.filter(book => book.shelf === shelfName);
-// };
-
 class BookLibrary extends React.Component{
     onShelfChanged = (newShelfId, oldShelfId, bookId) => {
         this.props.onShelfChanged(newShelfId, oldShelfId, bookId);

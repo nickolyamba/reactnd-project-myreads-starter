@@ -25,6 +25,10 @@ class Search extends React.Component {
         this.props.onShelfChanged(newShelfId, oldShelfId, movedBook);
     };
 
+    /**
+     * Updates this.state.books based on query
+     * @param query - keyword for a book
+     */
     getBooksByQuery(query){
         if(query === ''){
             this.setState({books: []});
@@ -38,7 +42,7 @@ class Search extends React.Component {
     }
 
     /**
-     * Assign queried books to shelves
+     * Assigns queried books to shelves
      * @param booksByQuery
      */
     assignBooksToShelves(booksByQuery){
