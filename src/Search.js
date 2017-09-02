@@ -25,10 +25,6 @@ class Search extends React.Component {
         this.props.onShelfChanged(newShelfId, oldShelfId, movedBook);
     };
 
-    updateQuery(query){
-        this.getBooksByQuery(query);
-    }
-
     getBooksByQuery(query){
         if(query === ''){
             this.setState({books: []});
@@ -66,7 +62,7 @@ class Search extends React.Component {
                                    placeholder="Search by title or author"
                                    /*source: https://stackoverflow.com/questions/28889826*/
                                    ref={input => this.nameInput = input}
-                                   onChange={event => this.updateQuery(event.target.value)}
+                                   onChange={event => this.getBooksByQuery(event.target.value)}
                             />
                         </Debounce>
                     </div>
