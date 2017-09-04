@@ -17,7 +17,8 @@ class Search extends React.Component {
     }
 
     componentDidMount(){
-        this.nameInput.focus();
+        this.bookInput.focus();
+        this.networkWarning = document.getElementById('errorMsg');
     }
 
     onShelfChanged = (newShelfId, oldShelfId, bookId) => {
@@ -34,11 +35,23 @@ class Search extends React.Component {
             this.setState({books: []});
             return;
         }
+        // hide a warning message
+        this.networkWarning.style.visibility = "hidden";
+
         BooksAPI.search(query, MAX_RESULTS).then(books => {
-            if(!books || books['error']) books = [];
+                if(!books){
+                    books = [];
+                    this.requestError('No books found: ', query);
+                }
+                else if(books.error){
+                    this.requestError(books.error, query);
+                    books = [];
+                }
+
+
             this.assignBooksToShelves(books);
             this.setState({books});
-        })
+        }).catch(error => this.requestError(error, query));
     }
 
     /**
@@ -54,6 +67,12 @@ class Search extends React.Component {
         }
     }
 
+    requestError = (error, query)=>{
+        console.log(error);
+        this.networkWarning.style.visibility = "visible";
+        this.networkWarning.innerHTML = `There was an error making a request for the ${query}: ${error}`;
+    };
+
     render(){
         return(
             <div className="search-books">
@@ -65,18 +84,20 @@ class Search extends React.Component {
                             <input type="text"
                                    placeholder="Search by title or author"
                                    /*source: https://stackoverflow.com/questions/28889826*/
-                                   ref={input => this.nameInput = input}
+                                   ref={input => this.bookInput = input}
                                    onChange={event => this.getBooksByQuery(event.target.value)}
                             />
                         </Debounce>
                     </div>
                 </div>
+
                 <div className="search-books-results">
+                    <p id="errorMsg" style={{'visibility': 'hidden', 'color': 'red'}}> </p>
                     <ol className="books-grid">
                         {
                             this.state.books.map(book => (
                                 <li key={book.id}>
-                                    <Book title={book.title} authors={!!book.authors ? book.authors : []}
+                                    <Book title={book.title ? book.title : 'No Title!'} authors={!!book.authors ? book.authors : []}
                                           cover={book.imageLinks.thumbnail}
                                           shelfId={book.shelf} bookId={book.id}
                                           onShelfChanged={this.onShelfChanged}
