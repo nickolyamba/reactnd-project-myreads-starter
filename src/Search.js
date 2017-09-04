@@ -99,6 +99,7 @@ class Search extends React.Component {
                                 <li key={book.id}>
                                     <Book title={book.title ? book.title : 'No Title!'} authors={!!book.authors ? book.authors : []}
                                           cover={book.imageLinks.thumbnail}
+                                          imageDimensions={[128, 193]}
                                           shelfId={book.shelf} bookId={book.id}
                                           onShelfChanged={this.onShelfChanged}
                                     />

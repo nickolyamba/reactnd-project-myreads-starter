@@ -8,11 +8,13 @@ class Book extends React.Component{
     };
 
     render(){
+        const width = this.props.imageDimensions[0];
+        const height = this.props.imageDimensions[1];
         return(
             <div className="book">
                 <div className="book-top">
                     <div className="book-cover" 
-                         style={{width: 128, height: 193, backgroundImage: `url(${this.props.cover})`}}>
+                         style={{width: width, height: height, backgroundImage: `url(${this.props.cover})`}}>
                     </div>
                     <ShelfChanger selectedOption={this.props.shelfId} onShelfChanged={this.onShelfChanged}/>
                 </div>
@@ -29,7 +31,8 @@ Book.propTypes = {
     cover: PropTypes.string,
     shelfId: PropTypes.string.isRequired,
     bookId: PropTypes.string.isRequired,
-    onShelfChanged: PropTypes.func.isRequired
+    onShelfChanged: PropTypes.func.isRequired,
+    imageDimensions: PropTypes.array.isRequired
 };
 
 export default Book;

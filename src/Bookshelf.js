@@ -21,6 +21,7 @@ class BooksShelf extends React.Component{
                                     <Book title={book.title} authors={book.authors}
                                           cover={book.imageLinks.thumbnail}
                                           shelfId={this.props.shelfId} bookId={book.id}
+                                          imageDimensions={[128, 193]}
                                           onShelfChanged={this.onShelfChanged}
                                     />
                                 </li>
