@@ -97,7 +97,8 @@ class Search extends React.Component {
                         {
                             this.state.books.map(book => (
                                 <li key={book.id}>
-                                    <Book title={book.title ? book.title : 'No Title!'} authors={!!book.authors ? book.authors : []}
+                                    <Book title={book.title ? book.title : 'No Title!'}
+                                          authors={!!book.authors ? book.authors : []}
                                           cover={book.imageLinks.thumbnail}
                                           imageDimensions={[128, 193]}
                                           shelfId={book.shelf} bookId={book.id}
